@@ -12,6 +12,7 @@ if [[ -z "$CMD" ]]; then
     exit 1
 fi
 
+BASE_EXEC_CMD="docker"
 DOCKER_SOCKET_PATH=/var/run/docker.sock
 HAS_SOCKET_ACCESS=$(test -r $DOCKER_SOCKET_PATH; echo "$?")
 
