@@ -11,11 +11,33 @@ if [[ -z "$CMD" ]]; then
     exit 1
 fi
 
+DOCKER_SOCKET_PATH=/var/run/docker.sock
+HAS_SOCKET_ACCESS=$(test -r $DOCKER_SOCKET_PATH; echo "$?")
+
+if [ $HAS_SOCKET_ACCESS -ne 0 ]; then
+    if ! grep -q "^docker:" /etc/group; then
+        echo "Creating the 'docker' group..."
+        sudo groupadd docker
+    fi
+
+    echo "WARNING: Socket access is denied"
+    echo "To fix this we will add the current user to docker group with : sudo usermod -a -G docker $USER"
+    read -p "Do you want to proceed? (yes/no) " yn
+    case $yn in 
+        yes | Y | y | Yes | YES) echo "ok, we will proceed";
+            sudo usermod -a -G docker $USER;
+            echo "You must reboot your computer for the changes to take effect";;
+        no | N | n | No | NO) echo "ok, Skipping";;
+        * ) echo "invalid response, Skipping";;
+    esac
+    BASE_EXEC_CMD="sudo ${BASE_EXEC_CMD}"
+fi
+
 IMAGE="epitechcontent/epitest-docker"
 
 if docker image inspect "$IMAGE" &>/dev/null; then
     echo "Checking for updates..."
-    sudo docker pull "$IMAGE" | tee pull.log
+    docker pull "$IMAGE" | tee pull.log
 
     if grep -q "Downloaded newer image" pull.log; then
         echo "New image detected. Removing old version..."
@@ -25,7 +47,7 @@ if docker image inspect "$IMAGE" &>/dev/null; then
     rm pull.log
 else
     echo "Image not found locally. Pulling it for the first time..."
-    sudo docker pull "$IMAGE"
+    docker pull "$IMAGE"
 fi
 
-sudo docker run --rm -v "$(pwd)":/app -w /app "$IMAGE" bash -c "$CMD"
+docker run --rm -v "$(pwd)":/app -w /app "$IMAGE" bash -c "$CMD"
