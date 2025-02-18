@@ -1,0 +1,31 @@
+#!/bin/bash
+if ! command -v docker &> /dev/null; then
+    echo "Error: Docker is not installed. Please install it and try again."
+    exit 1
+fi
+
+CMD="${@:1}"
+
+if [[ -z "$CMD" ]]; then
+    echo "Usage: epitest <command>"
+    exit 1
+fi
+
+IMAGE="epitechcontent/epitest-docker"
+
+if docker image inspect "$IMAGE" &>/dev/null; then
+    echo "Checking for updates..."
+    sudo docker pull "$IMAGE" | tee pull.log
+
+    if grep -q "Downloaded newer image" pull.log; then
+        echo "New image detected. Removing old version..."
+        docker image rm "$(docker images -q "$IMAGE")"
+    fi
+
+    rm pull.log
+else
+    echo "Image not found locally. Pulling it for the first time..."
+    sudo docker pull "$IMAGE"
+fi
+
+sudo docker run --rm -v "$(pwd)":/app -w /app "$IMAGE" bash -c "$CMD"
