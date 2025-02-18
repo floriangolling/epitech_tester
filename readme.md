@@ -1,6 +1,4 @@
-Here's a sample `README.md` that explains how to set up and use `epitest`:
 
-```markdown:readme.md
 # Epitest Setup and Usage Guide
 
 ## Prerequisites
@@ -54,12 +52,3 @@ To uninstall `epitest`, remove the script from `/usr/local/bin/`:
 ```bash
 sudo rm /usr/local/bin/epitest
 ```
-
-Additionally, you may want to delete the `epitest` script from your current directory.
-
----
-
-This guide provides a quick and easy way to set up and use `epitest` for running your project tests within a Docker environment.
-```
-
-This `README.md` provides a clear and concise guide for setting up and using `epitest`, referencing the relevant code snippets for setup and usage.
