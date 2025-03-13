@@ -6,8 +6,9 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 INSTALL_PATH="/usr/local/bin/epitest"
+SCRIPT_DIR=$(dirname "$(realpath "$0")")
 
-if [ ! -f "epitest" ]; then
+if [ ! -f "$SCRIPT_DIR/epitest" ]; then
     echo "Error: 'epitest' script not found in the current directory."
     echo "Please make sure the 'epitest' script is in the same directory as the installer."
     exit 1
@@ -15,7 +16,7 @@ fi
 
 echo "Installing 'epitest'..."
 
-cp -f epitest "$INSTALL_PATH" 2>/dev/null
+cp -f "$SCRIPT_DIR/epitest" "$INSTALL_PATH" 2>/dev/null
 if [ $? -ne 0 ]; then
     echo "Error: Failed to copy 'epitest' to $INSTALL_PATH."
     exit 1
