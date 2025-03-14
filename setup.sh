@@ -6,7 +6,7 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 INSTALL_PATH="/usr/local/bin/epitest"
-SCRIPT_DIR=$(dirname "$(realpath "$0")")
+SCRIPT_DIR="$( cd "$( dirname "$0" )" && pwd -P )"
 
 if [ ! -f "$SCRIPT_DIR/epitest" ]; then
     echo "Error: 'epitest' script not found in the current directory."
