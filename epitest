@@ -1,16 +1,16 @@
 #!/bin/bash
 
 show_help() {
-    echo "Usage: epitest [-g|--graphic] <command> [args...]"
+    echo "Usage: epitest [-g|--graphic] <command>"
     echo ""
     echo "Options:"
     echo "  -g, --graphic   Enable graphical mode (useful for CSFML projects)"
     echo "  -h, --help      Show this help message and exit"
     echo ""
     echo "Example:"
-    echo "  epitest ./a.out             # Run an executable"
-    echo "  epitest \"make re && ./a.out\"  # Run multiple commands"
-    echo "  epitest -g ./my_hunter      # Run in graphical mode"
+    echo "  epitest ./a.out                 # Run an executable"
+    echo "  epitest \"make re && ./a.out\"    # Run multiple commands"
+    echo "  epitest -g ./my_hunter          # Run in graphical mode"
     exit 0
 }
 
