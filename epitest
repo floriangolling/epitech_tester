@@ -38,8 +38,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 if [[ ${#CMD[@]} -eq 0 ]]; then
-    echo "Usage: epitest [-g|--graphic] <command> [args...]"
-    exit 1
+    show_help
 fi
 
 BASE_EXEC_CMD="docker"
