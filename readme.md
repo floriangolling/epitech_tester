@@ -1,54 +1,93 @@
-
 # Epitest Setup and Usage Guide
 
 ## Prerequisites
 
-Before setting up `epitest`, ensure that Docker is installed on your system. You can verify this by running:
+Before installing `epitest`, ensure that Docker is installed on your system. You can verify this by running:
 
 ```bash
 docker --version
 ```
 
-If Docker is not installed, please follow the [official Docker installation guide](https://docs.docker.com/get-docker/) for your operating system.
+If Docker is not installed, follow the [official Docker installation guide](https://docs.docker.com/get-docker/) for your operating system.
 
-## Setup
+## Installation
 
-To set up `epitest`, follow these steps:
+To install `epitest`, follow these steps:
 
-1. **Clone the Repository**: If you haven't already, clone the repository containing the `epitest` script and `setup.sh`.
+1. **Clone the Repository** (if not already cloned):
 
-2. **Run the Setup Script**: Execute the `setup.sh` script to install `epitest` on your system. This script must be run with root privileges.
+   ```bash
+   git clone <repository-url>
+   cd <repository-directory>
+   ```
+
+2. **Run the Setup Script**: Execute the `setup.sh` script with root privileges:
 
    ```bash
    sudo ./setup.sh
    ```
 
-   **What `setup.sh` Does**:
-   - Checks if the script is run as root or with `sudo`.
-   - Verifies the presence of the `epitest` script in the current directory.
-   - Copies the `epitest` script to `/usr/local/bin/` for global access.
-   - Sets execute permissions on the `epitest` script.
+   **What **``setup.sh``** Does:**
 
-3. **Verify Installation**: After running the setup script, you should see a confirmation message indicating that `epitest` has been successfully installed.
+   - Ensures the script is run with root permissions.
+   - Verifies the presence of the `epitest` script in the current directory.
+   - Copies `epitest` to `/usr/local/bin/` for global access.
+   - Grants execute permissions to `epitest`.
+
+3. **Verify Installation**: Check if `epitest` is installed correctly:
+
+   ```bash
+   epitest -h
+   ```
+
+   You should see the usage information displayed.
 
 ## Usage
 
-To use `epitest`, simply run the following command:
+To execute a command within the `epitest` Docker environment, use:
 
 ```bash
 epitest <command>
 ```
 
-Replace `<command>` with the command you wish to execute within the Docker environment. For example, to run an executable named `a.out`, use:
+### Examples:
 
-```bash
-epitest ./a.out
-```
+- Run an executable:
+
+  ```bash
+  epitest ./a.out
+  ```
+
+- Run multiple commands (use quotes to group them):
+
+  ```bash
+  epitest "make re && ./a.out"
+  ```
+
+- Enable graphical mode (e.g., for CSFML projects):
+
+  ```bash
+  epitest -g "make re && ./my_hunter"
+  ```
 
 ## Uninstallation
 
-To uninstall `epitest`, remove the script from `/usr/local/bin/`:
+To remove `epitest`, delete the script from `/usr/local/bin/`:
 
 ```bash
 sudo rm /usr/local/bin/epitest
 ```
+
+## Troubleshooting
+
+If you encounter any issues:
+
+- Ensure Docker is running properly.
+- Verify that `epitest` is in `/usr/local/bin/` by running:
+  ```bash
+  which epitest
+  ```
+- Check for permission issues and rerun `setup.sh` with `sudo`.
+
+For further assistance, consult the project repository or open an issue.
+
