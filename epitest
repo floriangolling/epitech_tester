@@ -87,8 +87,22 @@ fi
 DOCKER_RUN_OPTS=("--rm" "-it" "-v" "$(pwd):/app" "-w" "/app")
 if [ "$GRAPHIC_MODE" = true ]; then
     echo "Enabling graphical mode..."
-    xhost +local:docker
-    DOCKER_RUN_OPTS+=("-e" "DISPLAY=$DISPLAY" "-v" "/tmp/.X11-unix:/tmp/.X11-unix:rw" "--net=host")
+
+    # macOS config
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        echo "Detected macOS"
+        if ! pgrep -i XQuartz &>/dev/null; then
+            echo "Launching XQuartz..."
+            open -a XQuartz
+            sleep 5
+        fi
+        DOCKER_DISPLAY=host.docker.internal:0
+        DOCKER_RUN_OPTS+=("-e" "DISPLAY=$DOCKER_DISPLAY" "-v" "/tmp/.X11-unix:/tmp/.X11-unix:rw")
+    else
+        # For non-macOS
+        xhost +local:docker
+        DOCKER_RUN_OPTS+=("-e" "DISPLAY=$DISPLAY" "-v" "/tmp/.X11-unix:/tmp/.X11-unix:rw" "--net=host" )
+    fi
 fi
 
 ${BASE_EXEC_CMD} run "${DOCKER_RUN_OPTS[@]}" "$IMAGE" bash -c "${CMD[@]}"

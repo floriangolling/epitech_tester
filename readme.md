@@ -21,8 +21,17 @@ To install `epitest`, follow these steps:
    cd <repository-directory>
    ```
 
-2. **Run the Setup Script**: Execute the `setup.sh` script with root privileges:
+2. **Run the Setup Script**: Execute the setup script with root privileges:
 
+    **MacOS**
+
+    ```bash
+    chmod +x macOS.sh && ./macOS.sh
+    ```
+
+    > Note: This will also launch **setup.sh**
+
+    **Other**
    ```bash
    sudo ./setup.sh
    ```
