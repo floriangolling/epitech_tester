@@ -21,19 +21,28 @@ fi
 
 GRAPHIC_MODE=false
 CMD=()
+PASSTHROUGH=false
 
 while [[ $# -gt 0 ]]; do
-    case "$1" in
-        -g|--graphic)
-            GRAPHIC_MODE=true
-            ;;
-        -h|--help)
-            show_help
-            ;;
-        *)
-            CMD+=("$1")
-            ;;
-    esac
+    if [[ "$PASSTHROUGH" = true ]]; then
+        CMD+=("$1")
+    else
+        case "$1" in
+            -g|--graphic)
+                GRAPHIC_MODE=true
+                ;;
+            -h|--help)
+                show_help
+                ;;
+            --)
+                PASSTHROUGH=true
+                ;;
+            *)
+                CMD+=("$1")
+                PASSTHROUGH=true
+                ;;
+        esac
+    fi
     shift
 done
 
