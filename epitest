@@ -90,9 +90,9 @@ if [ "$GRAPHIC_MODE" = true ]; then
 
     # macOS config
     if [[ "$OSTYPE" == "darwin"* ]]; then
-        echo "Detected macOS..."
-        if ! pgrep -q XQuartz; then
-            echo "Starting XQuartz..."
+        echo "Detected macOS"
+        if ! pgrep -i XQuartz &>/dev/null; then
+            echo "Launching XQuartz..."
             open -a XQuartz
             sleep 5
         fi
