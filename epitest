@@ -97,7 +97,7 @@ if [ "$GRAPHIC_MODE" = true ]; then
             sleep 5
         fi
         DOCKER_DISPLAY=host.docker.internal:0
-        DOCKER_RUN_OPTS+=("-e" "DISPLAY=$DOCKER_DISPLAY" "-v" "/tmp/.X11-unix:/tmp/.X11-unix:rw")
+        DOCKER_RUN_OPTS+=("-e" "DISPLAY=$DOCKER_DISPLAY" "-v" "/tmp/.X11-unix:/tmp/.X11-unix:rw" "-e" "LIBGL_ALWAYS_INDIRECT=1")
     else
         # For non-macOS
         xhost +local:docker
